@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper Gallery</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .wallpaper {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .wallpaper:hover {
+            transform: scale(1.05);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .download-button {
+            display: block;
+            background-color: #0073e6;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .download-button:hover {
+            background-color: #005bb7;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Wallpaper Gallery</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="text-center py-5">
+        <h1>Welcome to Wallpaper Gallery</h1>
+    </header>
+
+    <!-- Wallpaper Gallery -->
+    <div class="container">
+        <div class="row" id="wallpaperContainer">
+            <!-- Wallpapers will be dynamically added here based on the selected page -->
+        </div>
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination" id="pagination">
+                <!-- Pagination links will be generated dynamically here -->
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Bootstrap Footer -->
+    <footer class="bg-light text-center py-3">
+        Wallpaper Gallery &copy; 2023. All Rights Reserved.
+    </footer>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Sample wallpaper data (you can replace this with your data)
+        const wallpapers = [
+            { src: 'https://piktochart.com/wp-content/uploads/2023/04/large-29.jpg', name: 'Wallpaper 1' },
+            { src: 'https://images.wallpapersden.com/image/download/amazing-desert-hd-cool-aesthetic_bWpoammUmZqaraWkpJRmZWdprWpsaw.jpg', name: 'Wallpaper 2' },
+            { src: 'https://i.pinimg.com/originals/a6/e7/46/a6e7468371ba3b3c3dc212b3ef54cd9c.jpg', name: 'Wallpaper 2' },
+            { src: 'https://www.pixelstalk.net/wp-content/uploads/images6/5K-Wallpaper-HD-Free-download.jpg', name: 'Wallpaper 2' },
+            { src: 'https://images.wallpapersden.com/image/download/minimalist-playerunknowns-battlegrounds-4k_a2plbmyUmZqaraWkpJRobWllrWdma2U.jpg', name: 'Wallpaper 2' },
+            { src: 'https://e0.pxfuel.com/wallpapers/520/1013/desktop-wallpaper-cool-landscape-night-minimal-art-laptop-minimalist-and-background-minimalist-laptop.jpg', name: 'Wallpaper 2' },
+            { src: 'https://images.wallpapersden.com/image/download/small-memory_am1pa2aUmZqaraWkpJRmbmdlrWZlbWU.jpg', name: 'Wallpaper 2' },
+            { src: 'https://w0.peakpx.com/wallpaper/103/274/HD-wallpaper-laptop-red-sunset-background-laptop.jpg', name: 'Wallpaper 2' },
+            { src: 'https://wallpaperset.com/w/full/5/7/d/461128.jpg', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPvNz0jUQac9e-HQnA6tfap23kyEngIQP2Fu5-JYSNEpQCD31DtZIy_X8WoPejaoPVK-Y&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGfWEfRP04H5BpoX_TTYLDI29f8C2lG3166zeTOZFMaliibLtfWM2gikKMpLlr8FK4Igg&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRySTpwflcnKVHoriAnYODgLrE9gk66KfecNyiW7Yj_SjOVHWUmmKeSXCDFT2p3NIzsHsA&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://i.pinimg.com/originals/de/1d/df/de1ddf9ee30e08e15460626b919ef87e.jpg', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSGRcoXys7WF60DNlO_giW-lFeLhsZFU_oktuZJce8F2BPBo_uQXGIM6QEBdX-NZAm9-Y&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJABgcS5PhyqzC3jALaJhhKYzm78uMfzZrlrgbasH6EZI18aJlEBOW2EWpGW3C0F5hWDk&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfYd1axEYmxKUrXrUZet72xhgJuOYv2K34yZSjijufqK3WbEs_umH3UjkLI_pY7H2wUUk&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHdAykuzpj78Ram14xmnH26an6A3p80DPAttmZbYBN-xARLTrhOkCEJPalfj8Df9xPG1A&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTplv7U5gyrew4sBPKkA8EhaDEohe5XwXmAoGAyz8PpMfGbUnvTxRyrcYn6QQV1ZF-wn0&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgMrFPQHbamfmZYdmJlOhRf-sQttNB3vVKanNRFaBNBleGh4HhtiuOOIaPqXeH-VPs8y4&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJbKTigMtOGqa12z-ZKVDzjaQUd16UcIDGSzYTleQl_J7HTRXVTThG0Xie2-KYvh2_xHA&usqp=CAU', name: 'Wallpaper 2' },
+            { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStfL0qgkQlVT1mu_gX-iubxpYlzWX8xltBVu3TJs94IMaE-AE11MXm0rAmrpWIBkWLzR4&usqp=CAU', name: 'Wallpaper 2' },
+            // Add more wallpapers here
+        ];
+
+        // Items per page
+        const itemsPerPage = 9;
+
+        // Calculate the number of pages
+        const totalPages = Math.ceil(wallpapers.length / itemsPerPage);
+
+        // Function to display wallpapers for a given page
+        function displayWallpapers(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = page * itemsPerPage;
+
+            const wallpaperContainer = document.getElementById('wallpaperContainer');
+            wallpaperContainer.innerHTML = '';
+
+            for (let i = startIndex; i < endIndex && i < wallpapers.length; i++) {
+                const wallpaper = wallpapers[i];
+                const wallpaperDiv = document.createElement('div');
+                wallpaperDiv.classList.add('wallpaper', 'col-md-4');
+                wallpaperDiv.innerHTML = `
+                    <img src="${wallpaper.src}" alt="${wallpaper.name}">
+                    <a href="${wallpaper.src}" class="download-button" download>Download ${wallpaper.name}</a>
+                `;
+                wallpaperContainer.appendChild(wallpaperDiv);
+            }
+        }
+
+        // Function to generate pagination links
+        function generatePaginationLinks() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.classList.add('page-item');
+                const link = document.createElement('a');
+                link.classList.add('page-link');
+                link.textContent = i;
+                link.href = '#';
+                link.addEventListener('click', () => {
+                    displayWallpapers(i);
+                });
+                li.appendChild(link);
+                pagination.appendChild(li);
+            }
+
+
+        }
+
+        // Initial display on page load
+        displayWallpapers(1);
+        generatePaginationLinks();
+    </script>
+</body>
+</html>
